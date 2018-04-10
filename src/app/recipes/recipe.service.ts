@@ -1,32 +1,45 @@
-import { EventEmitter } from "@angular/core";
+import { Injectable } from "@angular/core";
 
-import { Recipe } from "./recipe.module";
-import { Ingredient } from "../shared/ingredient.module";
+import { Recipe } from "./recipe.model";
+import { Ingredient } from "../shared/ingredient.model";
+import { ShoppingListService } from "../shopping-list/shopping-list.service";
 
+@Injectable()
 export class RecipeService {
-    recipeSelected = new EventEmitter<Recipe>();
-  private  recipes: Recipe[] = [
-        new Recipe(
-        'Pasta', 
-        'Mexican schzwano',
-        'https://cdn3.tmbi.com/secure/RMS/attachments/37/300x300/exps25157_FM153592B03_18_12b.jpg ',
-         [
-             new Ingredient('Cheese', 2),
-             new Ingredient('olives', 3)
-         ] ),
-        new Recipe(
-        'Chocolate Tuffle', 
-        'Tuffle layer Cake with extra chocos',
-        'http://cdn-image.foodandwine.com/sites/default/files/styles/551x551/public/200609-r-xl-chocolate-truffle-layer-cake.jpg?itok=r4VWYrUO',
-         [
-             new Ingredient('chocochips', 6),
-             new Ingredient('Mozotos', 7)
-         ] )
-        ];
+    
 
+ private   recipes: Recipe[] = [
+ new Recipe(
+    'Black Forest', 
+    'Choco Tuffles',
+    'https://i.ytimg.com/vi/dsJtgmAhFF4/maxresdefault.jpg',
+[
+    new Ingredient('shampion', 2),
+    new Ingredient('French Fries', 20)
+]),
+new Recipe(
+    'Cheesey Pasta',
+    'Italino' ,
+    'https://www.sensibus.com/deli/sites/sensibus.com/files/recipes/pasta-dish-2_0.jpg',
+[
+    new Ingredient('Burger', 3),
+    new Ingredient('coka cola', 3)
+])
+];
+
+constructor(private slService: ShoppingListService){
+
+}
+    
 getRecipes(){
-    return this.recipes.slice();
+return this.recipes.slice();
 }
 
+getRecipe(index: number) {
+return this.recipes[index];
+}
 
+addIngredientsToShoppingList(ingredients: Ingredient[]){
+this.slService.addIngredients(ingredients);
+}
 }
