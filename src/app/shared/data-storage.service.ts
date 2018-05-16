@@ -16,7 +16,9 @@ constructor (private http: Http,
 }
 
 storeRecipes() {
-return this.http.put('https://recipe-book-86475.firebaseio.com/recipes.json',
+    const token = this.authService.getToken();
+
+return this.http.put('https://recipe-book-86475.firebaseio.com/recipes.json?auth=' + token,
 this.recipeService.getRecipes());
 }
 
@@ -29,6 +31,7 @@ getRecipes(){
             const recipes: Recipe[] = response.json();
             for(let recipe of recipes){
                 if(!recipe['ingredients'])
+
                 {
                     recipe['ingredients'] = [];
                 }
